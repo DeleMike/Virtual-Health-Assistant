@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "700076264774",
+    "firebase_url": "https://thebot-f1587.firebaseio.com",
+    "project_id": "thebot-f1587",
+    "storage_bucket": "thebot-f1587.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:700076264774:android:ebeda2ebd5e40106796947",
+        "android_client_info": {
+          "package_name": "com.medicminds.thebot"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "700076264774-j07pedmbucg630kt6tb52h0shf22ts1q.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.medicminds.thebot",
+            "certificate_hash": "59845e37b64fe89476d190c5fa67f52710eb9170"
+          }
+        },
+        {
+          "client_id": "700076264774-7svcaig6l12mn6jits6bgp0p3f3n1llk.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBKZI6aOoBfj_vfdeAnIy8wqqPRdqkSpQY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "700076264774-7svcaig6l12mn6jits6bgp0p3f3n1llk.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
