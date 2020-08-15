@@ -23,6 +23,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 
+import java.util.Calendar;
 import java.util.Date;
 import java.util.Random;
 
@@ -30,8 +31,9 @@ public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     private static final String TAG = "MainActivity";
-    private static final String BOT_NAME = "The Bot";
-    private ChatView chatView;
+    private static final String BOT_NAME = "Blythe";
+    private ChatView mChatView;
+    private String mChatBotMessage = "";
 
 
     @Override
@@ -59,15 +61,13 @@ public class MainActivity extends AppCompatActivity
         NavigationView navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
+        mChatView = findViewById(R.id.chat_view);
+        getWelcomeMessage();
 
-
-        chatView = findViewById(R.id.chat_view);
-
-
-        chatView.addMessage(new ChatMessage("Hello I'm your Health Assistant",
+        mChatView.addMessage(new ChatMessage(mChatBotMessage + "I'm your Health Assistant",
                 new Date().getTime(), ChatMessage.Type.RECEIVED, BOT_NAME));
 
-        chatView.setOnSentMessageListener(new ChatView.OnSentMessageListener() {
+        mChatView.setOnSentMessageListener(new ChatView.OnSentMessageListener() {
             @Override
             public boolean sendMessage(final ChatMessage chatMessage) {
                 if(!(chatMessage.getMessage().trim().length() > 0)){
@@ -76,10 +76,10 @@ public class MainActivity extends AppCompatActivity
                 }
                 chatMessage.setSender("Delé");
 
-                chatView.addMessage(new ChatMessage(chatMessage.getMessage(),
+                mChatView.addMessage(new ChatMessage(chatMessage.getMessage(),
                         new Date().getTime(), ChatMessage.Type.SENT, chatMessage.getSender()));
 
-                chatView.getInputEditText().setText("");
+                mChatView.getInputEditText().setText("");
 
                 Log.i(TAG, "sendMessage: INPUT = "+chatMessage.getMessage());
                 Log.i(TAG, "sendMessage: FORMATTED TIME = "+chatMessage.getFormattedTime());
@@ -103,7 +103,7 @@ public class MainActivity extends AppCompatActivity
 
         });
 
-        chatView.setTypingListener(new ChatView.TypingListener() {
+        mChatView.setTypingListener(new ChatView.TypingListener() {
             @Override
             public void userStartedTyping() {
                 toolbar.setSubtitle("typing...");
@@ -117,30 +117,51 @@ public class MainActivity extends AppCompatActivity
 
     }
 
+    //get greetings from bot
+    private void getWelcomeMessage(){
+        //to get local time of user
+        Calendar calendar = Calendar.getInstance();
+        int timeOfDay = calendar.get(Calendar.HOUR_OF_DAY);
+
+        if(timeOfDay >= 0 && timeOfDay <6) {
+            mChatBotMessage = "Yes, your health has no time limit! ";
+        }else if(timeOfDay >= 6 && timeOfDay <12){
+            mChatBotMessage = "Hello good morning, ";
+        }else if (timeOfDay >= 12 && timeOfDay < 16){
+            mChatBotMessage = "Hello good afternoon, ";
+        }else if(timeOfDay >= 16 && timeOfDay < 24){
+            mChatBotMessage = "Hello good evening, ";
+        }
+    }
+
     //the chat bot replies here
     private void reply(String typedMessage) {
         if(typedMessage == null){
             typedMessage = "";
         }
 
-        String [] questions = {"Hello", "Hi", "How are you", "what\'s happening today"};
+        String [] questions = {"Hello", "Hi", "How are you", "what\'s happening today", "Blythe"};
 
-        String [] answers = {"Hi there", "Hello", "I\'m fine, any problem ?" , "Nothing much, just waiting for your questions"};
+        String [] answers = {"Hi there", "Hello", "I\'m fine, any problem ?" ,
+                "Nothing much, just waiting for your questions", "Yeah, what's up?"};
 
         if(typedMessage.equalsIgnoreCase(questions[0])){
-            chatView.addMessage(new ChatMessage(answers[0], new Date().getTime(),
+            mChatView.addMessage(new ChatMessage(answers[0], new Date().getTime(),
                     ChatMessage.Type.RECEIVED, BOT_NAME));
         }else if(typedMessage.equalsIgnoreCase(questions[1])){
-            chatView.addMessage(new ChatMessage(answers[1], new Date().getTime(),
+            mChatView.addMessage(new ChatMessage(answers[1], new Date().getTime(),
                     ChatMessage.Type.RECEIVED, BOT_NAME));
         }else if(typedMessage.equalsIgnoreCase(questions[2]) || typedMessage.contains(questions[2])){
-            chatView.addMessage(new ChatMessage(answers[2], new Date().getTime(),
+            mChatView.addMessage(new ChatMessage(answers[2], new Date().getTime(),
                     ChatMessage.Type.RECEIVED, BOT_NAME));
         }else if(typedMessage.equalsIgnoreCase(questions[3]) || typedMessage.contains("happening")){
-            chatView.addMessage(new ChatMessage(answers[3], new Date().getTime(),
+            mChatView.addMessage(new ChatMessage(answers[3], new Date().getTime(),
+                    ChatMessage.Type.RECEIVED, BOT_NAME));
+        }else if(typedMessage.equalsIgnoreCase(questions[4]) || typedMessage.contains(questions[4])){
+            mChatView.addMessage(new ChatMessage(answers[3], new Date().getTime(),
                     ChatMessage.Type.RECEIVED, BOT_NAME));
         }else{
-            chatView.addMessage(new ChatMessage("I\'m a work in a progress\nI will understand you later.", new Date().getTime(),
+            mChatView.addMessage(new ChatMessage("I\'m a work in a progress\nI will understand you later.", new Date().getTime(),
                     ChatMessage.Type.RECEIVED, BOT_NAME));
         }
 
