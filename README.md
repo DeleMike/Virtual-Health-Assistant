@@ -1,6 +1,7 @@
 # Virtual-Health-Assistant
 
-A medical health assistant that works with NLP and Computer Vision to detect illness symptoms when described and suggest remedies.
+A medical assistant solution that handles simple, repetitive tasks - works on the idea of NLP which detects illness symptoms of user when described, suggests remedies/ directs to a doctor if needed.
+
 
 All project work goes here.
 
